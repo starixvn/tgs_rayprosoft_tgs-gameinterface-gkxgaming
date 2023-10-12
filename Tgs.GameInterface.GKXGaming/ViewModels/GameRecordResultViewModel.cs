@@ -1,0 +1,15 @@
+﻿namespace Tgs.GameInterface.GKXGaming.ViewModels;
+
+public record GameRecordResultViewModel(
+    string ExternalRoundId,
+    string ExternalWagerId,
+    string ExternalGameId,
+    string PlayerCode,
+    DateTimeOffset ExternalCreatedOn,
+    DateTimeOffset ExternalClosedOn,
+    decimal Bet,
+    decimal ValidBet,
+    decimal Settle,
+    decimal Commission,
+    decimal WinLoss,
+    string AdditionalData);
