@@ -102,9 +102,9 @@ internal class GameInterfaceGKXGamingClient : IGameInterfaceGKXGamingClient
         return reply.State;
     }
 
-    public async IAsyncEnumerable<GameRecordInfo> GameRecordAsync(Uri apiUrl, string deskey, string md5key, string agentId, DateTimeOffset startTime, DateTimeOffset endTime, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<GameWagerInfo> GameWagerAsync(Uri apiUrl, string deskey, string md5key, string agentId, DateTimeOffset startTime, DateTimeOffset endTime, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var request = new GameRecordRequest
+        var request = new GameWagerRequest
         {
             ApiUrl = apiUrl.ToString(),
             Deskey = deskey,
@@ -114,13 +114,13 @@ internal class GameInterfaceGKXGamingClient : IGameInterfaceGKXGamingClient
             EndTime = endTime.ToTimestamp()
         };
 
-        var reply = await _client.GameRecordAsync(
+        var reply = await _client.GameWagerAsync(
             request: request,
             cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
         var gameRecords = reply.Items
-            ?? Enumerable.Empty<GameRecordInfo>();
+            ?? Enumerable.Empty<GameWagerInfo>();
 
         if (!gameRecords.Any())
         {

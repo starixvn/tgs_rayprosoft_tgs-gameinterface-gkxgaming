@@ -1,7 +1,6 @@
 ﻿namespace Tgs.GameInterface.GKXGaming.ViewModels;
 
-public record GameRecordResultViewModel(
-    string ExternalRoundId,
+public record GameWagerResultViewModel(
     string ExternalWagerId,
     string ExternalGameId,
     string PlayerCode,

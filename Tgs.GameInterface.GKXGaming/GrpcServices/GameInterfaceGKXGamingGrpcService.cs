@@ -11,7 +11,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
     private readonly IGetService<FundInQuery, FundResult> _fundInService;
     private readonly IGetService<FundOutQuery, FundResult> _fundOutService;
     private readonly IGetService<FundStatusQuery, bool> _fundStatusService;
-    private readonly IQueryService<GameRecordQuery, GameRecordResult> _gameRecordService;
+    private readonly IQueryService<GameWagerQuery, GameWagerResult> _gameWagerService;
     private readonly IGetService<GameUrlQuery, string> _gameUrlService;
     private readonly ILogger<GameInterfaceGKXGamingGrpcService> _logger;
     private readonly IGetService<PlayerBalanceQuery, PlayerBalanceResult> _playerBalanceService;
@@ -23,7 +23,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
         IGetService<FundInQuery, FundResult> fundInService,
         IGetService<FundOutQuery, FundResult> fundOutService,
         IGetService<FundStatusQuery, bool> fundStatusService,
-        IQueryService<GameRecordQuery, GameRecordResult> gameRecordService,
+        IQueryService<GameWagerQuery, GameWagerResult> gameWagerService,
         IGetService<GameUrlQuery, string> gameUrlService,
         IGetService<PlayerBalanceQuery, PlayerBalanceResult> playerBalanceService,
         ICommandService<PlayerLogoutCommand> playerLogoutService,
@@ -33,7 +33,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
         _fundInService = fundInService ?? throw new ArgumentNullException(nameof(fundInService));
         _fundOutService = fundOutService ?? throw new ArgumentNullException(nameof(fundOutService));
         _fundStatusService = fundStatusService ?? throw new ArgumentNullException(nameof(fundStatusService));
-        _gameRecordService = gameRecordService ?? throw new ArgumentNullException(nameof(gameRecordService));
+        _gameWagerService = gameWagerService ?? throw new ArgumentNullException(nameof(gameWagerService));
         _gameUrlService = gameUrlService ?? throw new ArgumentNullException(nameof(gameUrlService));
         _playerBalanceService = playerBalanceService ?? throw new ArgumentNullException(nameof(playerBalanceService));
         _playerLogoutService = playerLogoutService ?? throw new ArgumentNullException(nameof(playerLogoutService));
@@ -135,9 +135,9 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
         };
     }
 
-    public override async Task<GameRecordReply> GameRecord(GameRecordRequest request, ServerCallContext context)
+    public override async Task<GameWagerReply> GameWager(GameWagerRequest request, ServerCallContext context)
     {
-        var query = new GameRecordQuery(
+        var query = new GameWagerQuery(
             ApiUrl: new(request.ApiUrl),
             Deskey: request.Deskey,
             MD5key: request.MD5Key,
@@ -145,24 +145,23 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
             StartTime: request.StartTime.ToDateTimeOffset(),
             EndTime: request.EndTime.ToDateTimeOffset());
 
-        var results = await _gameRecordService
+        var results = await _gameWagerService
             .QueryAsync(
                 query: query,
                 cancellationToken: context.CancellationToken)
             .ToArrayAsync(
                 cancellationToken: context.CancellationToken)
             .ConfigureAwait(false)
-            ?? Enumerable.Empty<GameRecordResult>();
+            ?? Enumerable.Empty<GameWagerResult>();
 
-        var reply = new GameRecordReply();
+        var reply = new GameWagerReply();
 
         if (results.Any())
         {
             foreach (var result in results)
             {
-                reply.Items.Add(new GameRecordInfo
+                reply.Items.Add(new GameWagerInfo
                 {
-                    ExternalRoundId = result.ExternalRoundId,
                     ExternalWagerId = result.ExternalWagerId,
                     ExternalGameId = result.ExternalGameId,
                     PlayerCode = result.PlayerCode,

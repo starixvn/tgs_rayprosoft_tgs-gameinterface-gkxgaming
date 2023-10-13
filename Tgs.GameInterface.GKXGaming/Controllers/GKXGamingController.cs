@@ -151,12 +151,12 @@ public class GKXGamingController : ControllerBase
     ///             "endTime": "2023-07-26T12:00:00+08:00"
     ///         }
     /// </remarks>
-    [HttpPost("game/record")]
-    public async IAsyncEnumerable<GameRecordResultViewModel> GameRecordAsync(
-        [FromServices] IQueryService<GameRecordQuery, GameRecordResult> service,
-        GameRecordViewModel source)
+    [HttpPost("game/wager")]
+    public async IAsyncEnumerable<GameWagerResultViewModel> GameRecordAsync(
+        [FromServices] IQueryService<GameWagerQuery, GameWagerResult> service,
+        GameWagerViewModel source)
     {
-        var query = new GameRecordQuery(
+        var query = new GameWagerQuery(
             ApiUrl: source.ApiUrl,
             Deskey: source.Deskey,
             MD5key: source.MD5key,
@@ -171,7 +171,7 @@ public class GKXGamingController : ControllerBase
             .ToArrayAsync(
                 cancellationToken: HttpContext.RequestAborted)
             .ConfigureAwait(false)
-            ?? Enumerable.Empty<GameRecordResult>();
+            ?? Enumerable.Empty<GameWagerResult>();
 
         if (!results.Any())
         {
@@ -180,8 +180,7 @@ public class GKXGamingController : ControllerBase
 
         foreach (var result in results)
         {
-            yield return new GameRecordResultViewModel(
-                ExternalRoundId: result.ExternalRoundId,
+            yield return new GameWagerResultViewModel(
                 ExternalWagerId: result.ExternalWagerId,
                 ExternalGameId: result.ExternalGameId,
                 PlayerCode: result.PlayerCode,

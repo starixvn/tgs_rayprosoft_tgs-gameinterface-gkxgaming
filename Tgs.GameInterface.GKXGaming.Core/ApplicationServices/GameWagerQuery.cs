@@ -1,6 +1,6 @@
 ﻿namespace Tgs.GameInterface.GKXGaming.Core.ApplicationServices;
 
-public record GameRecordQuery(
+public record GameWagerQuery(
     Uri ApiUrl,
     string Deskey,
     string MD5key,

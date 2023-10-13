@@ -1,7 +1,6 @@
 ﻿namespace Tgs.GameInterface.GKXGaming.Core.ApplicationServices;
 
-public record GameRecordResult(
-    string ExternalRoundId,
+public record GameWagerResult(
     string ExternalWagerId,
     string ExternalGameId,
     string PlayerCode,

@@ -14,7 +14,7 @@ public interface IGameInterfaceGKXGamingClient
 
     ValueTask<bool> FundStatusAsync(Uri apiUrl, string deskey, string md5key, string agentId, string orderId, CancellationToken cancellationToken = default);
 
-    IAsyncEnumerable<GameRecordInfo> GameRecordAsync(Uri apiUrl, string deskey, string md5key, string agentId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default);
+    IAsyncEnumerable<GameWagerInfo> GameWagerAsync(Uri apiUrl, string deskey, string md5key, string agentId, DateTimeOffset startTime, DateTimeOffset endTime, CancellationToken cancellationToken = default);
 
     ValueTask<string> GameUrlAsync(Uri apiUrl, string deskey, string md5key, string agentId, string brandCode, string playerCode, string ipAddress, string externalGameId, string lang, CancellationToken cancellationToken = default);
 
