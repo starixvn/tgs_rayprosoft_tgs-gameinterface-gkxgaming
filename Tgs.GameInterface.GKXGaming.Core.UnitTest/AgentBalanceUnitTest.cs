@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Web;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using NSubstitute;
 using RichardSzalay.MockHttp;
 
@@ -14,6 +15,14 @@ public class AgentBalanceUnitTest
     [Fact]
     public async void Normal_Process()
     {
+        var policySettingsOptions = Options.Create(new PolicySettingsOptions
+        {
+            DepositRetryCount = 1,
+            DepositRetryWaitSec = 1,
+            GameRecordRetryCount = 1,
+            GameRecordRetryWaitSec = 1
+        });
+
         Uri apiUrl = new Uri("https://wc-api.orz16.com/");
         var deskey = "03CFE0179704BCDF";
         var md5key = "337B01054C6FA208";
@@ -68,6 +77,7 @@ public class AgentBalanceUnitTest
 
         var client = new GameApiClient(
             fakeLog,
+            policySettingsOptions,
             fakeCryptography,
             fakeSystemClock,
             fakeHttpClient);
