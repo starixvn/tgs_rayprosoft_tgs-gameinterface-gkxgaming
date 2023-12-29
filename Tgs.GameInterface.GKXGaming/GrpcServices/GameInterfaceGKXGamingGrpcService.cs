@@ -6,40 +6,17 @@ using Tgs.ServiceUtility;
 
 namespace Tgs.GameInterface.GKXGaming.GrpcServices;
 
-public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInterfaceGKXGamingBase
+public class GameInterfaceGKXGamingGrpcService(
+    ILogger<GameInterfaceGKXGamingGrpcService> logger,
+    IGetService<FundInQuery, FundResult> fundInService,
+    IGetService<FundOutQuery, FundResult> fundOutService,
+    IGetService<FundStatusQuery, bool> fundStatusService,
+    IQueryService<GameWagerQuery, GameWagerResult> gameWagerService,
+    IGetService<GameUrlQuery, string> gameUrlService,
+    IGetService<PlayerBalanceQuery, PlayerBalanceResult> playerBalanceService,
+    ICommandService<PlayerLogoutCommand> playerLogoutService,
+    IGetService<AgentBalanceQuery, AgentBalanceResult> agentBalanceService) : GameInterfaceGKXGaming.GameInterfaceGKXGamingBase
 {
-    private readonly IGetService<FundInQuery, FundResult> _fundInService;
-    private readonly IGetService<FundOutQuery, FundResult> _fundOutService;
-    private readonly IGetService<FundStatusQuery, bool> _fundStatusService;
-    private readonly IQueryService<GameWagerQuery, GameWagerResult> _gameWagerService;
-    private readonly IGetService<GameUrlQuery, string> _gameUrlService;
-    private readonly ILogger<GameInterfaceGKXGamingGrpcService> _logger;
-    private readonly IGetService<PlayerBalanceQuery, PlayerBalanceResult> _playerBalanceService;
-    private readonly ICommandService<PlayerLogoutCommand> _playerLogoutService;
-    private readonly IGetService<AgentBalanceQuery, AgentBalanceResult> _agentBalanceService;
-
-    public GameInterfaceGKXGamingGrpcService(
-        ILogger<GameInterfaceGKXGamingGrpcService> logger,
-        IGetService<FundInQuery, FundResult> fundInService,
-        IGetService<FundOutQuery, FundResult> fundOutService,
-        IGetService<FundStatusQuery, bool> fundStatusService,
-        IQueryService<GameWagerQuery, GameWagerResult> gameWagerService,
-        IGetService<GameUrlQuery, string> gameUrlService,
-        IGetService<PlayerBalanceQuery, PlayerBalanceResult> playerBalanceService,
-        ICommandService<PlayerLogoutCommand> playerLogoutService,
-        IGetService<AgentBalanceQuery, AgentBalanceResult> agentBalanceService)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _fundInService = fundInService ?? throw new ArgumentNullException(nameof(fundInService));
-        _fundOutService = fundOutService ?? throw new ArgumentNullException(nameof(fundOutService));
-        _fundStatusService = fundStatusService ?? throw new ArgumentNullException(nameof(fundStatusService));
-        _gameWagerService = gameWagerService ?? throw new ArgumentNullException(nameof(gameWagerService));
-        _gameUrlService = gameUrlService ?? throw new ArgumentNullException(nameof(gameUrlService));
-        _playerBalanceService = playerBalanceService ?? throw new ArgumentNullException(nameof(playerBalanceService));
-        _playerLogoutService = playerLogoutService ?? throw new ArgumentNullException(nameof(playerLogoutService));
-        _agentBalanceService = agentBalanceService ?? throw new ArgumentNullException(nameof(agentBalanceService));
-    }
-
     public override async Task<AgentBalanceReply> AgentBalance(AgentBalanceRequest request, ServerCallContext context)
     {
         var query = new AgentBalanceQuery(
@@ -48,7 +25,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
             MD5key: request.MD5Key,
             AgentId: request.AgentId);
 
-        var result = await _agentBalanceService
+        var result = await agentBalanceService
             .GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -62,7 +39,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
 
     public override Task<CheckingServiceReply> CheckingService(CheckingServiceRequest request, ServerCallContext context)
     {
-        _logger.LogWarning("LogOn:{logOn} Message: Create a check connection.({machineName})", DateTime.Now.ToString("o"), request.MachineName);
+        logger.LogWarning("LogOn:{logOn} Message: Create a check connection.({machineName})", DateTime.Now.ToString("o"), request.MachineName);
 
         return Task.FromResult(new CheckingServiceReply
         {
@@ -81,7 +58,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
             OrderId: request.OrderId,
             Amount: request.Amount);
 
-        var result = await _fundInService.GetAsync(
+        var result = await fundInService.GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
             .ConfigureAwait(false);
@@ -103,7 +80,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
             OrderId: request.OrderId,
             Amount: request.Amount);
 
-        var result = await _fundOutService.GetAsync(
+        var result = await fundOutService.GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
             .ConfigureAwait(false);
@@ -123,7 +100,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
             AgentId: request.AgentId,
             OrderId: request.OrderId);
 
-        var state = await _fundStatusService
+        var state = await fundStatusService
             .GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -145,7 +122,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
             StartTime: request.StartTime.ToDateTimeOffset(),
             EndTime: request.EndTime.ToDateTimeOffset());
 
-        var results = await _gameWagerService
+        var results = await gameWagerService
             .QueryAsync(
                 query: query,
                 cancellationToken: context.CancellationToken)
@@ -193,7 +170,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
             ExternalGameId: request.ExternalGameId,
             Lang: request.Lang);
 
-        var result = await _gameUrlService
+        var result = await gameUrlService
             .GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -214,7 +191,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
             AgentId: request.AgentId,
             PlayerCode: request.PlayerCode);
 
-        var result = await _playerBalanceService
+        var result = await playerBalanceService
             .GetAsync(
             query: query,
             cancellationToken: context.CancellationToken)
@@ -237,7 +214,7 @@ public class GameInterfaceGKXGamingGrpcService : GameInterfaceGKXGaming.GameInte
             AgentId: request.AgentId,
             PlayerCode: request.PlayerCode);
 
-        await _playerLogoutService
+        await playerLogoutService
             .ExecuteAsync(
             command: command,
             cancellationToken: context.CancellationToken)
