@@ -17,7 +17,7 @@ public class HashCryptographyUnitTest
 	}
 
 	[Fact]
-	public async void AesEncrypt_Balance()
+	public async Task AesEncrypt_Balance()
 	{
 		var hashCryptography = new HashCryptography();
 		var secretKey = "03CFE0179704BCDF";
@@ -31,7 +31,7 @@ public class HashCryptographyUnitTest
 	}
 
 	[Fact]
-	public async void AesEncrypt_Deposit()
+	public async Task AesEncrypt_Deposit()
 	{
 		var hashCryptography = new HashCryptography();
 		var secretKey = "03CFE0179704BCDF";
@@ -45,7 +45,7 @@ public class HashCryptographyUnitTest
 	}
 
 	[Fact]
-	public async void AesEncrypt_Withdrawal()
+	public async Task AesEncrypt_Withdrawal()
 	{
 		var hashCryptography = new HashCryptography();
 		var secretKey = "03CFE0179704BCDF";
@@ -59,7 +59,7 @@ public class HashCryptographyUnitTest
 	}
 
 	[Fact]
-	public async void AesEncrypt_Login()
+	public async Task AesEncrypt_Login()
 	{
 		var hashCryptography = new HashCryptography();
 		var secretKey = "03CFE0179704BCDF";
@@ -73,7 +73,7 @@ public class HashCryptographyUnitTest
 	}
 
 	[Fact]
-	public async void AesEncrypt_GameRecord()
+	public async Task AesEncrypt_GameRecord()
 	{
 		var hashCryptography = new HashCryptography();
 		var secretKey = "03CFE0179704BCDF";
