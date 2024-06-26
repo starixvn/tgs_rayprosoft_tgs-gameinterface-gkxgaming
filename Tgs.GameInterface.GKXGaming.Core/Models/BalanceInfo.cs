@@ -2,4 +2,5 @@
 
 public record BalanceInfo(
 	decimal TotalMoney,
-	decimal FreeMoney);
+	decimal FreeMoney,
+	bool Online);

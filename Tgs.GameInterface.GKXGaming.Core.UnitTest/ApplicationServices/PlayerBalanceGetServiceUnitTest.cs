@@ -20,7 +20,8 @@ public class PlayerBalanceGetServiceUnitTest
 
 		var info = new BalanceInfo(
 			TotalMoney: 100,
-			FreeMoney: 98);
+			FreeMoney: 98,
+			Online: false);
 		_ = fakeClient
 			.BalanceAsync(
 			Arg.Is(query.ApiUrl),
