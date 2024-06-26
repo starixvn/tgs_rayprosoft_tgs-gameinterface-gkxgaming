@@ -96,5 +96,6 @@ public class BalanceUnitTest
 
 		Assert.NotNull(actual);
 		Assert.Equal(1m, actual.FreeMoney);
+		Assert.False(actual.Online);
 	}
 }

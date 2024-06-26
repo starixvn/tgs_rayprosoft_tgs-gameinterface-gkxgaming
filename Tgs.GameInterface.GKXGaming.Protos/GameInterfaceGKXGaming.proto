@@ -5,13 +5,14 @@ import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "Tgs.GameInterface.GKXGaming.Protos";
 
-package gameinterfacegkxgaming;
+package GameInterfaceGKXGaming;
 
 // The greeting service definition.
 service GameInterfaceGKXGaming {
   // Sends a greeting
   rpc PlayerBalance (PlayerBalanceRequest) returns (PlayerBalanceReply);
-  rpc PlayerLogout (PlayerLogoutRequest) returns (BaseReply);
+  rpc PlayerLogout  (PlayerLogoutRequest) returns (BaseReply);
+  rpc PlayerOnline (PlayerOnlineRequest) returns (PlayerOnlineReply);
   rpc FundIn (FundRequest) returns (FundReply);
   rpc FundOut (FundRequest) returns (FundReply);
   rpc FundStatus(FundStatusRequest) returns (BaseReply);
@@ -23,6 +24,14 @@ service GameInterfaceGKXGaming {
 
 // The request message containing the user's name.
 message PlayerBalanceRequest {
+	string api_url = 1;
+	string deskey = 2;
+	string m_d5key = 3;
+	string agent_id = 4;
+	string player_code = 5;
+}
+
+message PlayerOnlineRequest {
 	string api_url = 1;
 	string deskey = 2;
 	string m_d5key = 3;
@@ -97,6 +106,10 @@ message PlayerBalanceReply {
 	phoenix.protobuf.DecimalValue balance = 1;
 	phoenix.protobuf.DecimalValue free_balance = 2;
 	phoenix.protobuf.DecimalValue outstanding_balance = 3;
+}
+
+message PlayerOnlineReply {
+	bool online = 1;
 }
 
 message AgentBalanceReply {

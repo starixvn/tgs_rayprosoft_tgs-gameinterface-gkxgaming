@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.GKXGaming
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.GKXGaming.Core", "Tgs.GameInterface.GKXGaming.Core\Tgs.GameInterface.GKXGaming.Core.csproj", "{B1A3D210-EE54-431E-8149-A92546965B1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameInterface.GKXGaming.Client", "Tgs.GameInterface.GKXGaming.Client\Tgs.GameInterface.GKXGaming.Client.csproj", "{29949D0C-1494-4D70-A8C2-FE401173578B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.GKXGaming.Client", "Tgs.GameInterface.GKXGaming.Client\Tgs.GameInterface.GKXGaming.Client.csproj", "{29949D0C-1494-4D70-A8C2-FE401173578B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameInterface.GKXGaming.Protos", "Tgs.GameInterface.GKXGaming.Protos\Tgs.GameInterface.GKXGaming.Protos.csproj", "{9CF7E32F-A79F-47B2-BB64-D2C5A7EB6345}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{29949D0C-1494-4D70-A8C2-FE401173578B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29949D0C-1494-4D70-A8C2-FE401173578B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29949D0C-1494-4D70-A8C2-FE401173578B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF7E32F-A79F-47B2-BB64-D2C5A7EB6345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF7E32F-A79F-47B2-BB64-D2C5A7EB6345}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF7E32F-A79F-47B2-BB64-D2C5A7EB6345}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF7E32F-A79F-47B2-BB64-D2C5A7EB6345}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
